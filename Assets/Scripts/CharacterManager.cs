@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,24 +11,18 @@ namespace KoftaAndKonafa
 {
     public class CharacterManager : MonoBehaviour
     {
-        [Header("Character State")]
-        public bool isEmptyHanded = true;
+        [Header("Character State")] public bool isEmptyHanded = true;
         public GameEnums.Item itemInHand = GameEnums.Item.Empty;
 
-        [Header("Meal State")]
-        public bool isHoldingMeal;
+        [Header("Meal State")] public bool isHoldingMeal;
         public MealSO heldMeal;
-        public bool isMealCooked;
+        public bool isMealReady;
 
-        [Header("Interaction Settings")]
-        public float interactionTime = 2.0f; // Time required to interact
+        [Header("Interaction Settings")] public float interactionTime = 2.0f; // Time required to interact
 
-        [Header("Hand Transform")]
-        public Transform characterHand; 
-        [Header("Meal Transform")]
-        public Transform characterHead;
-        [Header("UI Elements")]
-        public Image interactionTimerImage; // UI Image for the interaction timer
+        [Header("Hand Transform")] public Transform characterHand;
+        [Header("Meal Transform")] public Transform characterHead;
+        [Header("UI Elements")] public Image interactionTimerImage; // UI Image for the interaction timer
 
         private float _interactionTimer;
         private bool _isInsideStation;
@@ -41,29 +36,35 @@ namespace KoftaAndKonafa
         private IngredientSO _currentIngredientSO;
         private GameObject _prefabInHand;
         private IngredientLoader _ingredientLoader;
-        private bool situation1, situation2,situation3,situation4,situation5;
-        
+        private bool situation1, situation2, situation3, situation4, situation5, situation6;
+
         #region Singleton
 
         private static CharacterManager _instance;
 
-        public static CharacterManager Instance { get { return _instance; } }
-    
+        public static CharacterManager Instance
+        {
+            get { return _instance; }
+        }
+
         private void Awake()
         {
             if (_instance != null && _instance != this)
             {
                 Destroy(this.gameObject);
-            } else {
+            }
+            else
+            {
                 _instance = this;
             }
         }
+
         #endregion
 
         private void Start()
         {
-           _ingredientLoader = IngredientLoader.Instance;
-           
+            _ingredientLoader = IngredientLoader.Instance;
+
         }
 
         private void Update()
@@ -76,7 +77,7 @@ namespace KoftaAndKonafa
             }
 
             // Handle station interaction
-            if (situation1 || situation2 || situation3|| situation4 || situation5)
+            if (situation1 || situation2 || situation3 || situation4 || situation5 || situation6)
             {
                 _interactionTimer += Time.deltaTime;
                 interactionTimerImage.fillAmount = _interactionTimer / interactionTime;
@@ -238,10 +239,27 @@ namespace KoftaAndKonafa
                     _prefabInHand.SetActive(true);
                     heldMeal = tempMeal.mealSO;
                     isHoldingMeal = true;
-                    isMealCooked = false;
+                    if (heldMeal.needsCooking)
+                        isMealReady = false;
+                    else
+                        isMealReady = true;
+                    
                     itemInHand = GameEnums.Item.Meal;
                     
                 }
+            }
+
+            else if(currentStation.stationType == GameEnums.StationType.CookStation && stationManager.isMealReady)
+            {
+                heldMeal = stationManager.PickUpCookedMeal(characterHead);
+                characterHead.GetChild(0).transform.position = characterHead.position;
+                characterHead.GetChild(0).transform.Find("Meal_Holder").GetChild(0).gameObject.SetActive(true);
+                characterHead.GetChild(0).transform.Find("Cooked_Ingridients").gameObject.SetActive(true);
+                isHoldingMeal = true;
+                isMealReady = true;
+                itemInHand = GameEnums.Item.Meal;
+                isEmptyHanded = false;
+                stationManager.currentMealSO = null;
             }
         }
 
@@ -259,6 +277,16 @@ namespace KoftaAndKonafa
             _currentIngredient = null;
             situation4 = false; //because situation 4 is in an unreachable condition
             Destroy(_prefabInHand);
+            if(characterHead.childCount > 0)
+                Destroy(characterHead.GetChild(0).gameObject);
+        }
+
+        public void ResetMeal()
+        {
+            heldMeal = null;
+            isHoldingMeal = false;
+            isMealReady = false;
+            ResetHand();
         }
         
         bool CheckIngredientValidity(Ingredient ingredient, GameEnums.IngredientState ingredientState, StationSO stationSo)
@@ -316,9 +344,12 @@ namespace KoftaAndKonafa
                              _currentStationSO.stationType is GameEnums.StationType.AssembleStation &&
                              _currentAssembleStation.IsCurrentMealReady;
             }
+            
+            situation6 = _isInsideStation && _currentStation is not null && isEmptyHanded &&
+                         _currentStationSO.stationType == GameEnums.StationType.CookStation;
 
 
-            Debug.Log(situation1 + "   " + situation2  + "   " + situation3 + "  " + situation4 + "  " + situation5);
+            Debug.Log(situation1 + "   " + situation2  + "   " + situation3 + "  " + situation4 + "  " + situation5 + "  " + situation6);
         }
     }
 }

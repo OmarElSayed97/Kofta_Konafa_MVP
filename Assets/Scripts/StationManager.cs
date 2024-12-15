@@ -16,6 +16,9 @@ public class StationManager : MonoBehaviour
     
     [SerializeField] public Ingredient currentIngredient;
 
+    [HideInInspector] public GameObject currentMealPrefab;
+    [HideInInspector] public MealSO currentMealSO;
+    [HideInInspector] public bool isMealReady;
     [HideInInspector] public int stationID;
     
 
@@ -23,8 +26,6 @@ public class StationManager : MonoBehaviour
     private CharacterManager _characterManager;
     private KitchenManager _kitchenManager;
     
-    // Indicates if the station is currently in use
-    public bool isBusy;
 
     private GameObject currentItemPrefab;
     
@@ -92,6 +93,18 @@ public class StationManager : MonoBehaviour
             if(currentItemPrefab is not null && currentIngredient.currentState == GameEnums.IngredientState.Default)
                 StartAction();
         }
+        if (other.CompareTag("Player") && stationSO.stationType == GameEnums.StationType.CookStation &&
+            _characterManager.isHoldingMeal)
+        {
+            if (_characterManager.heldMeal.needsCooking)
+            {
+                _requiredTime = _characterManager.heldMeal.cookingTime;
+                currentMealPrefab = _characterManager.heldMeal.mealPrefabItem;
+                currentMealSO = _characterManager.heldMeal;
+                _characterManager.ResetMeal();
+                StartAction();
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -118,12 +131,34 @@ public class StationManager : MonoBehaviour
         if (stationSO.stationType == GameEnums.StationType.HeatStation)
             currentIngredient.currentState = GameEnums.IngredientState.Heated;
 
-        currentItemPrefab = Instantiate(_ingredientLoader.preparedIngredientsPrefabs[currentIngredient.ingredientID],
-            stationItemPlaceholder.transform);
+        if (stationSO.stationType == GameEnums.StationType.CookStation)
+        {
+            currentItemPrefab = Instantiate(currentMealPrefab, stationItemPlaceholder.transform);
+            currentItemPrefab.transform.Find("Meal_Holder").GetChild(0).gameObject.SetActive(true);
+            currentItemPrefab.transform.Find("Cooked_Ingridients").gameObject.SetActive(true);
+            isMealReady = true;
+
+        }
+        else
+        {
+            currentItemPrefab = Instantiate(_ingredientLoader.preparedIngredientsPrefabs[currentIngredient.ingredientID],
+                stationItemPlaceholder.transform);
+        }    
+      
         
         ResetStation();
         _characterManager.StationAlertPlayer(stationID,this);
         // Add logic for completing the action here
+    }
+
+    public MealSO PickUpCookedMeal(Transform characterHead)
+    {
+        Instantiate(currentMealPrefab, characterHead);
+        Destroy(currentItemPrefab);
+        currentItemPrefab = null;
+        currentMealPrefab = null;
+        isMealReady = false;
+        return currentMealSO;
     }
 
     public void ResetStation()

@@ -164,6 +164,7 @@ public class KitchenBuilder : MonoBehaviour
             StationManager station = tempStation.GetComponent<StationManager>();
             station.stationID = spawnIndex;
             station.currentIngredient = null;
+            Debug.Log("CURRENT STATION: " + station.stationSO.stationType + " --- " + stationPool[stationIndex].stationPrefab.name);
             //Update Availability Dictionaries
             stationAvailability[MapStateToStation(ingredientState)]++;
             var spawningPoint = spawningPoints[spawnIndex];

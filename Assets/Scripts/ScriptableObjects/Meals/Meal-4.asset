@@ -24,3 +24,5 @@ MonoBehaviour:
   - ingredient: {fileID: 11400000, guid: 2bf64901859c4fa468f586b82bc5db3e, type: 2}
     finalState: 0
     isDelivered: 0
+  mealPrefabItem: {fileID: 2181002303047595581, guid: 19700dc9cb9791f47a6b114609a3f1ff,
+    type: 3}

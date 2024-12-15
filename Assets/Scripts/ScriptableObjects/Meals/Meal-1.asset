@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Meal-1
   m_EditorClassIdentifier: 
   needsCooking: 1
-  isReady: 0
+  cookingTime: 3.5
   requiredIngredients:
   - ingredient: {fileID: 11400000, guid: bda5343bcd492ac4a8b742312c80b4c8, type: 2}
     finalState: 1
@@ -27,3 +27,5 @@ MonoBehaviour:
   - ingredient: {fileID: 11400000, guid: c3ad7a08d971a374f907bacb1301a0b8, type: 2}
     finalState: 0
     isDelivered: 0
+  mealPrefabItem: {fileID: 1950629460237951466, guid: f407d91ba8efbd7478f023217db8e84e,
+    type: 3}

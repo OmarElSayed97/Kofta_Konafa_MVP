@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0809e10bf3c425249a2a04ce0e652e13, type: 3}
   m_Name: CookStation
   m_EditorClassIdentifier: 
-  stationType: 0
+  stationType: 4
   stationPrefab: {fileID: 1910828698604972475, guid: 42064fdca5293ea48bbf463bb1cbf529,
     type: 3}
   receivableItems:

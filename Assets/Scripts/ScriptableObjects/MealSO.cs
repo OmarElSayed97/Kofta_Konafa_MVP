@@ -11,7 +11,7 @@ namespace KoftaAndKonafa.ScriptableObjects
         public bool needsCooking;
 
         // Indicates if the meal is ready to be served
-        public bool isReady;
+        public float cookingTime;
 
         // Serializable key-value pair for required ingredients
         [System.Serializable]
@@ -27,6 +27,8 @@ namespace KoftaAndKonafa.ScriptableObjects
 
         // List of required ingredients for the meal
         public List<RequiredIngredient> requiredIngredients = new List<RequiredIngredient>();
+
+        public GameObject mealPrefabItem;
 
 
       

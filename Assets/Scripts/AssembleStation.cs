@@ -52,8 +52,6 @@ namespace KoftaAndKonafa
             // }
 
             GameObject mealPrefab = currentMeal.mealPrefabInstance;
-            Debug.Log("Picking UP ASSEMBLY");
-
             ResetMeal(currentMeal);
             return mealPrefab;
         }

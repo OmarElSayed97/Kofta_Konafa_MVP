@@ -8650,6 +8650,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2961439357204648628, guid: b8ced411680505247808d81020b0b11a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4782785140072622017, guid: b8ced411680505247808d81020b0b11a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178197259869008088, guid: b8ced411680505247808d81020b0b11a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9703,7 +9718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerOneMeals:
   - {fileID: 11400000, guid: 75f0ec29ca83e034cbd216727e8566c0, type: 2}
-  - {fileID: 11400000, guid: dfb6fd45adcb9de44b0cf1ac715a5935, type: 2}
+  - {fileID: 11400000, guid: 5be5a53be3e4c79458a67778a9909bd2, type: 2}
   - {fileID: 11400000, guid: e1a99b41ae2a8ec4c8226e2b653a221b, type: 2}
   playerOneMealData:
   - mealSO: {fileID: 11400000, guid: 75f0ec29ca83e034cbd216727e8566c0, type: 2}
@@ -18129,7 +18144,7 @@ MonoBehaviour:
   itemInHand: 4
   isHoldingMeal: 0
   heldMeal: {fileID: 0}
-  isMealCooked: 0
+  isMealReady: 0
   interactionTime: 0.35
   characterHand: {fileID: 802226351}
   characterHead: {fileID: 400067448}
