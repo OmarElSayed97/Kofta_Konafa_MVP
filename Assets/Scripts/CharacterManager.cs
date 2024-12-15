@@ -36,7 +36,7 @@ namespace KoftaAndKonafa
         private IngredientSO _currentIngredientSO;
         private GameObject _prefabInHand;
         private IngredientLoader _ingredientLoader;
-        private bool situation1, situation2, situation3, situation4, situation5, situation6;
+        private bool situation1, situation2, situation3, situation4, situation5, situation6, situation7;
 
         #region Singleton
 
@@ -77,7 +77,7 @@ namespace KoftaAndKonafa
             }
 
             // Handle station interaction
-            if (situation1 || situation2 || situation3 || situation4 || situation5 || situation6)
+            if (situation1 || situation2 || situation3 || situation4 || situation5 || situation6 || situation7)
             {
                 _interactionTimer += Time.deltaTime;
                 interactionTimerImage.fillAmount = _interactionTimer / interactionTime;
@@ -260,6 +260,16 @@ namespace KoftaAndKonafa
                 isEmptyHanded = false;
                 stationManager.currentMealSO = null;
             }
+            
+            else if(currentStation.stationType == GameEnums.StationType.DonationStation)
+            {
+               if(isHoldingMeal)
+                   ResetMeal();
+               else
+                   ResetHand();
+                   
+               
+            }
         }
 
         private void ResetInteraction()
@@ -346,6 +356,9 @@ namespace KoftaAndKonafa
             
             situation6 = _isInsideStation && _currentStation is not null && isEmptyHanded &&
                          _currentStationSO.stationType == GameEnums.StationType.CookStation;
+            
+            situation7 = _isInsideStation && _currentStation is not null && !isEmptyHanded &&
+                         _currentStationSO.stationType == GameEnums.StationType.DonationStation;
 
 
             Debug.Log(situation1 + "   " + situation2  + "   " + situation3 + "  " + situation4 + "  " + situation5 + "  " + situation6);

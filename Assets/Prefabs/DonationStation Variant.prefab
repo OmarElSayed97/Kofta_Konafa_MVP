@@ -262,7 +262,7 @@ PrefabInstance:
         type: 3}
       propertyPath: stationSO
       value: 
-      objectReference: {fileID: 11400000, guid: a350b8a2b21832f4aaca85ae41b478d1,
+      objectReference: {fileID: 11400000, guid: 3313776f8e4916c40ae97821795b27aa,
         type: 2}
     - target: {fileID: 6427249500059666044, guid: 3e4a810f6b6027f4b948ace9e32f394b,
         type: 3}
