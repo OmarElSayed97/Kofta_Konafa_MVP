@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0809e10bf3c425249a2a04ce0e652e13, type: 3}
+  m_Name: ChoppingStation
+  m_EditorClassIdentifier: 
+  stationType: 2
+  isBusy: 0
+  stationPrefab: {fileID: 5348768132730424626, guid: bcc76cb7398fcf74e8309667bbf86957,
+    type: 3}
+  receivableItems:
+  - ingredient: {fileID: 11400000, guid: bda5343bcd492ac4a8b742312c80b4c8, type: 2}
+    state: 0
+  - ingredient: {fileID: 11400000, guid: 88f36114ceacd484bbeada17271c2d0e, type: 2}
+    state: 0
+  - ingredient: {fileID: 11400000, guid: 4486ac706f0a2254486766e98571db71, type: 2}
+    state: 0
+  - ingredient: {fileID: 11400000, guid: 7aea746d3e9a54b40ad23c537dabf7b5, type: 2}
+    state: 0
+  - ingredient: {fileID: 11400000, guid: 3b49425912e53e4468bd27dc583873e5, type: 2}
+    state: 0

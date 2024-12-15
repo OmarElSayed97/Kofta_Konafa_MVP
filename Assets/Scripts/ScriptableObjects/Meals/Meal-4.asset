@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6fc45f37047a3245bfbb201e92e0834, type: 3}
+  m_Name: Meal-4
+  m_EditorClassIdentifier: 
+  needsCooking: 0
+  isReady: 0
+  requiredIngredients:
+  - ingredient: {fileID: 11400000, guid: 2c9a44f8f1d95584b90ec05463355ad4, type: 2}
+    finalState: 2
+    isDelivered: 0
+  - ingredient: {fileID: 11400000, guid: e8fdb0f2f02be484e96e3ee6d99aa7cc, type: 2}
+    finalState: 0
+    isDelivered: 0
+  - ingredient: {fileID: 11400000, guid: 2bf64901859c4fa468f586b82bc5db3e, type: 2}
+    finalState: 0
+    isDelivered: 0
