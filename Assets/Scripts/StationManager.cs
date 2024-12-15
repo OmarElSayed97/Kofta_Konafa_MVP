@@ -96,7 +96,7 @@ public class StationManager : MonoBehaviour
         if (other.CompareTag("Player") && stationSO.stationType == GameEnums.StationType.CookStation &&
             _characterManager.isHoldingMeal)
         {
-            if (_characterManager.heldMeal.needsCooking)
+            if (_characterManager.heldMeal.needsCooking && currentItemPrefab is null)
             {
                 _requiredTime = _characterManager.heldMeal.cookingTime;
                 currentMealPrefab = _characterManager.heldMeal.mealPrefabItem;

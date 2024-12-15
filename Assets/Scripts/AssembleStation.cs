@@ -53,6 +53,7 @@ namespace KoftaAndKonafa
 
             GameObject mealPrefab = currentMeal.mealPrefabInstance;
             ResetMeal(currentMeal);
+            
             return mealPrefab;
         }
 
@@ -61,11 +62,13 @@ namespace KoftaAndKonafa
         /// </summary>
         private void ResetMeal(MealAssemblyData mealData)
         {
+            IsCurrentMealReady = false;
             mealData.mealPrefabInstance.SetActive(false);
             ResetMealChildren(mealData);
             mealData.activatedIngredients.Clear();
             DeactivatePlate(mealData);
             currentMeal = null;
+            bestMeal = null;
         }
 
 
@@ -138,7 +141,6 @@ namespace KoftaAndKonafa
                 Debug.Log($"{currentMeal.mealSO.name} is fully prepared!");
                 //currentMeal = null; // Reset the current meal lock
             }
-           
             return true;
         }
 
@@ -169,7 +171,6 @@ namespace KoftaAndKonafa
                                 .finalState);
                         if (ingredientObject is not null)
                         {
-                            Debug.Log("INGREDIENT: " + ingredientObject.name);
                             ingredientObject.SetActive(true);
                             bestMeal.activatedIngredients.Add(ingredient);
 

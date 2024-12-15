@@ -9717,20 +9717,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerOneMeals:
-  - {fileID: 11400000, guid: 75f0ec29ca83e034cbd216727e8566c0, type: 2}
-  - {fileID: 11400000, guid: 5be5a53be3e4c79458a67778a9909bd2, type: 2}
-  - {fileID: 11400000, guid: e1a99b41ae2a8ec4c8226e2b653a221b, type: 2}
+  - {fileID: 11400000, guid: d32b97cdff0c0474e8e2d2de4f8606ec, type: 2}
+  - {fileID: 11400000, guid: 882eaa1a7fe92ee4ea6997662ebc83a2, type: 2}
+  - {fileID: 11400000, guid: d82d6c8aeda3d6143ad7a2ad92c29dbe, type: 2}
   playerOneMealData:
-  - mealSO: {fileID: 11400000, guid: 75f0ec29ca83e034cbd216727e8566c0, type: 2}
-    mealPrefabInstance: {fileID: 1950629460237951466, guid: f407d91ba8efbd7478f023217db8e84e,
+  - mealSO: {fileID: 11400000, guid: d32b97cdff0c0474e8e2d2de4f8606ec, type: 2}
+    mealPrefabInstance: {fileID: 5159219198781091124, guid: a0c74e9fa55d7814689a6147b293f7c9,
       type: 3}
     activatedIngredients: 
-  - mealSO: {fileID: 11400000, guid: 5be5a53be3e4c79458a67778a9909bd2, type: 2}
-    mealPrefabInstance: {fileID: 9085667266210353771, guid: 05efc34dc9c48864fa4b55e522d645f0,
+  - mealSO: {fileID: 11400000, guid: 882eaa1a7fe92ee4ea6997662ebc83a2, type: 2}
+    mealPrefabInstance: {fileID: 285454791685118853, guid: f6befa7519aa6d746b911bf567b66d1e,
       type: 3}
     activatedIngredients: 
-  - mealSO: {fileID: 11400000, guid: e1a99b41ae2a8ec4c8226e2b653a221b, type: 2}
-    mealPrefabInstance: {fileID: 6463749299160324004, guid: 03072520b18e4ea4395776d6fb50545a,
+  - mealSO: {fileID: 11400000, guid: d82d6c8aeda3d6143ad7a2ad92c29dbe, type: 2}
+    mealPrefabInstance: {fileID: 2181002303047595581, guid: 19700dc9cb9791f47a6b114609a3f1ff,
       type: 3}
     activatedIngredients: 
 --- !u!114 &1330544247

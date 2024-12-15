@@ -208,7 +208,6 @@ namespace KoftaAndKonafa
                         bool success = assembleStation.TryAssembleIngredient(_currentIngredient);
                         if (success)
                         {
-                            Debug.Log("I ASSEMBLED");
                             ResetHand();
                         }
                         else
