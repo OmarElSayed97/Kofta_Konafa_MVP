@@ -1,11 +1,12 @@
 using System;
 using System.ComponentModel;
 using System.Security.Cryptography;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using KoftaAndKonafa.Enums;
 using KoftaAndKonafa.ScriptableObjects;
-using Unity.VisualScripting;
+using TMPro;
 
 namespace KoftaAndKonafa
 {
@@ -22,7 +23,10 @@ namespace KoftaAndKonafa
 
         [Header("Hand Transform")] public Transform characterHand;
         [Header("Meal Transform")] public Transform characterHead;
-        [Header("UI Elements")] public Image interactionTimerImage; // UI Image for the interaction timer
+        [Header("UI Elements")] 
+        public Image interactionTimerImage; // UI Image for the interaction timer
+        [SerializeField] private Image scoreUI;
+        [SerializeField] private TextMeshProUGUI scoreUIText;
 
         private float _interactionTimer;
         private bool _isInsideStation;
@@ -36,6 +40,7 @@ namespace KoftaAndKonafa
         private IngredientSO _currentIngredientSO;
         private GameObject _prefabInHand;
         private IngredientLoader _ingredientLoader;
+        private LeaderboardManager _leaderboardManager;
         private bool situation1, situation2, situation3, situation4, situation5, situation6, situation7;
 
         #region Singleton
@@ -64,6 +69,7 @@ namespace KoftaAndKonafa
         private void Start()
         {
             _ingredientLoader = IngredientLoader.Instance;
+            _leaderboardManager = FindObjectOfType<LeaderboardManager>();
 
         }
 
@@ -263,10 +269,20 @@ namespace KoftaAndKonafa
             
             else if(currentStation.stationType == GameEnums.StationType.DonationStation)
             {
-               if(isHoldingMeal)
-                   ResetMeal();
-               else
+                if (isHoldingMeal)
+                {
+                    ResetMeal();
+                    AnimateScore(3,scoreUI,scoreUIText);
+                    _leaderboardManager.UpdatePlayerScore("You", 3);
+                }
+                   
+                else
+                {
                    ResetHand();
+                   AnimateScore(1,scoreUI,scoreUIText);
+                   _leaderboardManager.UpdatePlayerScore("You", 1);
+                }
+                   
                    
                
             }
@@ -363,5 +379,46 @@ namespace KoftaAndKonafa
 
             Debug.Log(situation1 + "   " + situation2  + "   " + situation3 + "  " + situation4 + "  " + situation5 + "  " + situation6);
         }
+        
+        
+        
+        public void AnimateScore(int targetScore, Image scoreImage, TextMeshProUGUI scoreText)
+        {
+            // Activate the image
+            scoreImage.gameObject.SetActive(true);
+
+            // Reset initial values
+            scoreImage.rectTransform.localScale = Vector3.one * 0.1f;
+            scoreImage.rectTransform.localPosition = Vector3.zero;
+            scoreText.text = "0";
+
+            // Activate image
+            scoreImage.gameObject.SetActive(true);
+
+            Sequence scoreSequence = DOTween.Sequence();
+
+            // Move up and scale simultaneously
+            scoreSequence.Append(scoreImage.rectTransform
+                .DOMoveY(scoreImage.rectTransform.position.y + 0.8f, 0.3f)
+                .SetEase(Ease.OutQuad));
+
+            scoreSequence.Join(scoreImage.rectTransform
+                .DOScale(Vector3.one, 0.3f)
+                .SetEase(Ease.OutBack));
+
+            // Count score during upward movement
+            scoreSequence.Join(DOTween.To(() => 0, value => scoreText.text = "+" +value + "$", targetScore, 0.3f)
+                .SetEase(Ease.Linear));
+
+            // Final scale punch after reaching position
+            scoreSequence.Append(scoreImage.rectTransform
+                .DOPunchScale(Vector3.one * 0.3f, 0.2f, 1, 0));
+
+            // Deactivate after completion
+            scoreSequence.OnComplete(() => scoreImage.gameObject.SetActive(false));
+
+            scoreSequence.Play();
+        }
+
     }
 }

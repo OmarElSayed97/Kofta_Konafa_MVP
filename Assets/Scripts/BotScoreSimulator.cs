@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KoftaAndKonafa.ScriptableObjects;
+using Unity.VisualScripting;
 
 namespace KoftaAndKonafa
 {
@@ -9,19 +10,30 @@ namespace KoftaAndKonafa
     public class Bot
     {
         public string botName;
-        public List<MealAssemblyData> botMeals;
+        public List<MealSO> botMeals;
         public Vector2 deliveryInterval;
         public int totalScore;
+
+        public Bot(string name, List<MealSO> meals, Vector2 deliveryTime )
+        {
+            botName = name;
+            botMeals = meals;
+            deliveryInterval = deliveryTime;
+            totalScore = 0;
+        }
     }
 
     public class BotScoreSimulator : MonoBehaviour
     {
-        [Header("Bot Settings")]
+        [Header("Bot Settings")] public List<Vector2> botsIntervalTimes;
+
         public List<Bot> bots;
         public LeaderboardManager leaderboardManager;
 
         private void Start()
         {
+            for (int i = 0; i < bots.Count; i++)
+                bots[i].deliveryInterval = botsIntervalTimes[i];
             StartScoreSimulation();
         }
 
@@ -30,6 +42,12 @@ namespace KoftaAndKonafa
         /// </summary>
         public void StartScoreSimulation()
         {
+            if(bots.Count == 0)
+            {
+              Debug.Log("NO BOTS");
+              return;
+            }
+                
             foreach (var bot in bots)
             {
                 StartCoroutine(SimulateBotScore(bot));
@@ -48,12 +66,12 @@ namespace KoftaAndKonafa
                 if (bot.botMeals.Count == 0) continue;
 
                 // Pick a random meal and update the leaderboard
-                MealAssemblyData deliveredMeal = bot.botMeals[Random.Range(0, bot.botMeals.Count)];
-                int mealPrice = deliveredMeal.mealSO.mealPrice;
+                MealSO deliveredMeal = bot.botMeals[Random.Range(0, bot.botMeals.Count)];
+                int mealPrice = deliveredMeal.mealPrice;
                 bot.totalScore += mealPrice;
                 leaderboardManager.UpdatePlayerScore(bot.botName, mealPrice);
 
-                Debug.Log($"{bot.botName} delivered {deliveredMeal.mealSO.name} for {mealPrice} points! Total Score: {bot.totalScore}");
+                Debug.Log($"{bot.botName} delivered {deliveredMeal.name} for {mealPrice} points! Total Score: {bot.totalScore}");
             }
         }
     }

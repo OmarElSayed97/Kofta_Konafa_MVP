@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections;
 using DG.Tweening;
 using KoftaAndKonafa.ScriptableObjects;
+using TMPro;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -23,10 +24,13 @@ namespace KoftaAndKonafa
 
         [Header("UI")] 
         public Transform uiActiveOrdersPanel;
-
         public Transform uiInactiveOrderQueue;
         public GameObject uiOrderPrefab;
-        
+
+        [Header("References")] 
+        [SerializeField] private LeaderboardManager _leaderboardManager;
+        [SerializeField] private GameObject botSimulatorObject;
+        [SerializeField] private TextMeshProUGUI remainingTimeText;
         
         Queue<Order> orderQueue = new Queue<Order>();
         List<Order> activeOrders = new List<Order>();
@@ -60,7 +64,7 @@ namespace KoftaAndKonafa
         #endregion
         private void Start()
         {
-            StartGame();
+            //StartGame();
         }
 
         /// <summary>
@@ -70,6 +74,13 @@ namespace KoftaAndKonafa
         {
             ResetGame();
             StartCoroutine(GameTimer());
+            _leaderboardManager = FindObjectOfType<LeaderboardManager>();
+        }
+
+        public void InitializeBots(List<Bot> botsList)
+        {
+            botSimulatorObject.GetComponent<BotScoreSimulator>().bots = botsList;
+            botSimulatorObject.SetActive(true);
         }
 
         /// <summary>
@@ -122,6 +133,7 @@ namespace KoftaAndKonafa
             {
                 if (!isGameRunning || isGamePaused) yield return null;
                 remainingGameTime -= Time.deltaTime;
+                remainingTimeText.text = FormatTime(remainingGameTime);
                 yield return null;
             }
             EndGame();
@@ -134,6 +146,18 @@ namespace KoftaAndKonafa
         {
             isGameRunning = false;
             Debug.Log("Game Over!");
+        }
+        
+        /// <summary>
+        /// Converts remaining time into minutes and seconds format.
+        /// </summary>
+        /// <param name="remainingTime">Time in seconds.</param>
+        /// <returns>Formatted time string "MM:SS"</returns>
+        public string FormatTime(float remainingTime)
+        {
+            int minutes = Mathf.FloorToInt(remainingTime / 60);
+            int seconds = Mathf.FloorToInt(remainingTime % 60);
+            return string.Format("{0:D2}:{1:D2}", minutes, seconds);
         }
 
         /// <summary>
@@ -198,6 +222,7 @@ namespace KoftaAndKonafa
                 orderToDeliver.uiOrder.transform.DOScale(0, 1).SetEase(Ease.InBack)
                     .OnComplete(() => Destroy(orderToDeliver.uiOrder));
                 orderToDeliver.isDelivered = true;
+                _leaderboardManager.UpdatePlayerScore("You",orderToDeliver.meal.mealPrice);
                 activeOrders.Remove(orderToDeliver);
                 orderQueue = new Queue<Order>(orderQueue.Where(o => !o.isDelivered));
                 UpdateActiveOrders();

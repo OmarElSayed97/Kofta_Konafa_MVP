@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mealID: 6
   mealName: 
+  mealPrice: 19
   needsCooking: 1
-  cookingTime: 5
+  cookingTime: 6
   requiredIngredients:
   - ingredient: {fileID: 11400000, guid: 3b49425912e53e4468bd27dc583873e5, type: 2}
     finalState: 0

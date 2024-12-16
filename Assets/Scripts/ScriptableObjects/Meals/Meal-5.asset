@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mealID: 5
   mealName: 
+  mealPrice: 7
   needsCooking: 0
   cookingTime: 0
   requiredIngredients:

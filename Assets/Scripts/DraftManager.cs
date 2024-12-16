@@ -14,6 +14,7 @@ namespace KoftaAndKonafa
         public List<Image> player1MealImages;
         public List<Image> player2MealImages;
         public List<Image> player3MealImages;
+        public List<Image> player4MealImages;
         public TMP_Text currentTurnText;
         public Button continueButton;
 
@@ -25,6 +26,7 @@ namespace KoftaAndKonafa
         private List<MealSO> player1Meals = new List<MealSO>();
         private List<MealSO> player2Meals = new List<MealSO>();
         private List<MealSO> player3Meals = new List<MealSO>();
+        private List<MealSO> player4Meals = new List<MealSO>();
 
         private int currentRound = 0;
         private int currentPlayerIndex = 0;
@@ -75,6 +77,10 @@ namespace KoftaAndKonafa
                 MealSO selectedMeal = GetRandomAvailableMeal();
                 AddMealToPlayer(i, selectedMeal);
                 DisableMealButton(selectedMeal);
+                if (i == 2)
+                {
+                    AddMealToPlayer(3, selectedMeal);
+                }
             }
 
             currentRound++;
@@ -101,6 +107,7 @@ namespace KoftaAndKonafa
                 0 => player1Meals,
                 1 => player2Meals,
                 2 => player3Meals,
+                3 => player4Meals,
                 _ => null
             };
 
@@ -112,6 +119,7 @@ namespace KoftaAndKonafa
                 0 => player1MealImages[player1Meals.Count - 1],
                 1 => player2MealImages[player2Meals.Count - 1],
                 2 => player3MealImages[player3Meals.Count - 1],
+                3 => player4MealImages[player4Meals.Count - 1],
                 _ => null
             };
 
@@ -171,7 +179,25 @@ namespace KoftaAndKonafa
                 KitchenManager.Instance.playerOneMealData.Add(new MealAssemblyData { mealSO = meal });
                 KitchenManager.Instance.playerOneMeals.Add(meal);
             }
+
+            List<Bot> botList = new List<Bot>();
+            for (int i = 1; i <= 3; i++)
+            {
+                
+                List<MealSO> targetList = i switch
+                {
+                    1 => player2Meals,
+                    2 => player3Meals,
+                    3 => player4Meals,
+                    _ => null
+                };
+                string botName = "bot_" + i;
+                Bot bot = new Bot(botName, targetList, new Vector2(8,20) );
+                botList.Add(bot);
+
+            }
             KitchenManager.Instance.BuildKitchen();
+            GameManager.Instance.InitializeBots(botList);
             GameManager.Instance.StartGame();
             Debug.Log("Game Started!");
             draftPanel.SetActive(false);

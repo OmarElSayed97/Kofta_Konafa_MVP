@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 namespace KoftaAndKonafa
 {
@@ -13,8 +14,8 @@ namespace KoftaAndKonafa
             public string playerName;
             public int score;
             public RectTransform rowTransform;
-            public Text playerNameText;
-            public Text scoreText;
+            public TextMeshProUGUI playerNameText;
+            public TextMeshProUGUI scoreText;
             public Image rankImage;
             [HideInInspector] public int rank;
         }
@@ -23,6 +24,13 @@ namespace KoftaAndKonafa
         public List<PlayerScoreData> playerScores;
         public float animationDuration = 0.5f;
         public List<Sprite> rankSprites; // 4 rank sprites
+
+        [Header("Other References")] 
+        public Image mainPlayerRankSprite;
+
+        public TextMeshProUGUI mainPlayerScoreText;
+
+        private int currentMainPlayerRank;
 
         private void Start()
         {
@@ -51,7 +59,9 @@ namespace KoftaAndKonafa
             if (player == null) return;
 
             player.score += scoreChange;
-            player.scoreText.text = player.score.ToString();
+            player.scoreText.text = player.score + "$";
+            if (player.playerName == "You")
+                mainPlayerScoreText.text = player.score + "$";
 
             RefreshLeaderboard();
         }
@@ -80,6 +90,16 @@ namespace KoftaAndKonafa
             if (player.rank > 0 && player.rank <= rankSprites.Count)
             {
                 player.rankImage.sprite = rankSprites[player.rank - 1];
+                if (player.playerName == "You")
+                {
+                    mainPlayerRankSprite.sprite = rankSprites[player.rank - 1];
+                    if (player.rank != currentMainPlayerRank)
+                    {
+                        mainPlayerRankSprite.transform.DOPunchScale(Vector3.one * 1.2f, 0.5f, 3, 0.1f);
+                        currentMainPlayerRank = player.rank;
+                    }
+                    
+                }
             }
         }
     }
