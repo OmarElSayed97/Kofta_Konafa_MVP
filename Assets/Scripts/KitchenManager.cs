@@ -9,6 +9,7 @@ public class KitchenManager : MonoBehaviour
     #region Singleton
 
     private static KitchenManager _instance;
+    private KitchenBuilder _kitchenBuilder;
 
     public static KitchenManager Instance { get { return _instance; } }
     
@@ -20,6 +21,8 @@ public class KitchenManager : MonoBehaviour
         } else {
             _instance = this;
         }
+
+        _kitchenBuilder = GetComponent<KitchenBuilder>();
     }
     #endregion
     
@@ -42,5 +45,10 @@ public class KitchenManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void BuildKitchen()
+    {
+        _kitchenBuilder.StartKitchen();
     }
 }

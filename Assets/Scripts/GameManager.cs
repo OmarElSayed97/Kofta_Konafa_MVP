@@ -49,7 +49,7 @@ namespace KoftaAndKonafa
         #endregion
         private void Start()
         {
-            InitializeGame();
+            
         }
 
         /// <summary>
@@ -58,7 +58,6 @@ namespace KoftaAndKonafa
         private void InitializeGame()
         {
             ResetGame();
-            StartGame();
             StartCoroutine(GameTimer());
         }
 
@@ -67,6 +66,7 @@ namespace KoftaAndKonafa
         /// </summary>
         public void StartGame()
         {
+            InitializeGame();
             isGameRunning = true;
             StartCoroutine(GenerateOrdersLoop());
         }

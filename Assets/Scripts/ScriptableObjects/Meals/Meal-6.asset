@@ -20,3 +20,4 @@ MonoBehaviour:
     isDelivered: 0
   mealPrefabItem: {fileID: 9085667266210353771, guid: 05efc34dc9c48864fa4b55e522d645f0,
     type: 3}
+  mealImage: {fileID: 21300038, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}

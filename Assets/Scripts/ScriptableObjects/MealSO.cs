@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using KoftaAndKonafa.Enums;
+using UnityEngine.UI;
 
 namespace KoftaAndKonafa.ScriptableObjects
 {
@@ -29,6 +30,7 @@ namespace KoftaAndKonafa.ScriptableObjects
         public List<RequiredIngredient> requiredIngredients = new List<RequiredIngredient>();
 
         public GameObject mealPrefabItem;
+        public Sprite mealImage;
 
 
       

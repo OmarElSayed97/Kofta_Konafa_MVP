@@ -31,9 +31,7 @@ public class KitchenBuilder : MonoBehaviour
     void Start()
     {
         _kitchenManager = KitchenManager.Instance;
-        InitializeStationDictionary();
-        InitializeIngredientDictionary();
-        InitStations();
+       
         
     }
 
@@ -41,6 +39,13 @@ public class KitchenBuilder : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void StartKitchen()
+    {
+        InitializeStationDictionary();
+        InitializeIngredientDictionary();
+        InitStations();
     }
     
     [System.Serializable]

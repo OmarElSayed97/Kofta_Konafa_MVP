@@ -33,7 +33,7 @@ namespace KoftaAndKonafa
                 .Select(meal => new MealAssemblyData
                 {
                     mealSO = meal.mealSO,
-                    mealPrefabInstance = Instantiate(meal.mealPrefabInstance, stationItemPlaceholder.transform),
+                    mealPrefabInstance = Instantiate(meal.mealSO.mealPrefabItem, stationItemPlaceholder.transform),
                     activatedIngredients = new List<GameEnums.Ingredient>()
                 })
                 .ToList();
@@ -286,5 +286,18 @@ namespace KoftaAndKonafa
         public MealSO mealSO;
         public GameObject mealPrefabInstance;
         public List<GameEnums.Ingredient> activatedIngredients = new List<GameEnums.Ingredient>();
+        
+        public MealAssemblyData(MealSO meal)
+        {
+            mealSO = meal;
+            mealPrefabInstance = meal.mealPrefabItem;
+        }
+
+        public MealAssemblyData()
+        {
+            
+        }
     }
+    
+    
 }
