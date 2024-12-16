@@ -31,7 +31,7 @@ public class KitchenBuilder : MonoBehaviour
     void Start()
     {
         _kitchenManager = KitchenManager.Instance;
-       
+       StartKitchen();
         
     }
 

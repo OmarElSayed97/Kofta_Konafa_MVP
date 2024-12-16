@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6fc45f37047a3245bfbb201e92e0834, type: 3}
   m_Name: Meal-9
   m_EditorClassIdentifier: 
+  mealID: 9
+  mealName: 
   needsCooking: 1
   cookingTime: 4
   requiredIngredients:

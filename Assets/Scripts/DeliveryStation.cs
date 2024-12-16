@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using KoftaAndKonafa;
+using KoftaAndKonafa.ScriptableObjects;
 using UnityEngine;
 
 public class DeliveryStation : MonoBehaviour
@@ -34,8 +35,8 @@ public class DeliveryStation : MonoBehaviour
                     GameObject mealsprefab = Instantiate(_characterManager.heldMeal.mealPrefabItem, mealsPlaceholders[i]);
                     mealsprefab.transform.Find("Meal_Holder").GetChild(0).gameObject.SetActive(true);
                     mealsprefab.transform.Find("Cooked_Ingridients").gameObject.SetActive(true); 
+                    TweenMealAndSell(mealsprefab,_characterManager.heldMeal);
                     _characterManager.ResetMeal();
-                    TweenMealAndSell(mealsprefab);
                     return;
                 }
             }
@@ -44,8 +45,17 @@ public class DeliveryStation : MonoBehaviour
     }
 
 
-    void TweenMealAndSell(GameObject mealObject)
+    void TweenMealAndSell(GameObject mealObject, MealSO mealSO)
     {
-        mealObject.transform.DOScale(Vector3.zero, 0.4f).SetEase(Ease.InBack).OnComplete(()=> Destroy(mealObject));
+        mealObject.transform.DOScale(Vector3.zero, 0.4f).SetEase(Ease.InBack).OnComplete(() => DeliverOrderInStation(mealObject,mealSO));
+
     }
+
+    void DeliverOrderInStation(GameObject mealObject, MealSO mealSO)
+    {
+       GameManager.Instance.DeliverOrder(mealSO);
+       Destroy(mealObject);
+    }
+
+
 }

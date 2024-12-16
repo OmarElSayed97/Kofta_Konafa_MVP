@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Collections;
+using DG.Tweening;
 using KoftaAndKonafa.ScriptableObjects;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace KoftaAndKonafa
 {
@@ -17,10 +21,17 @@ namespace KoftaAndKonafa
         [Header("Game Settings")]
         public float gameDuration = 300f; // Total game time
 
+        [Header("UI")] 
+        public Transform uiActiveOrdersPanel;
+
+        public Transform uiInactiveOrderQueue;
+        public GameObject uiOrderPrefab;
+        
+        
         Queue<Order> orderQueue = new Queue<Order>();
         List<Order> activeOrders = new List<Order>();
         float remainingGameTime;
-        bool isGameRunning;
+        public bool isGameRunning;
         bool isGamePaused;
 
         
@@ -49,7 +60,7 @@ namespace KoftaAndKonafa
         #endregion
         private void Start()
         {
-            
+            StartGame();
         }
 
         /// <summary>
@@ -146,6 +157,10 @@ namespace KoftaAndKonafa
             if (!isGameRunning || isGamePaused) return;
             
             var newOrder = new Order(GetRandomMealSO(), orderLifetime);
+            newOrder.uiOrder = Instantiate(uiOrderPrefab, uiInactiveOrderQueue);
+            newOrder.uiOrder.transform.GetChild(0).GetComponent<Image>().sprite = newOrder.meal.mealImage;
+            newOrder.uiOrderTimer = newOrder.uiOrder.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+            newOrder.uiOrder.SetActive(false);
             orderQueue.Enqueue(newOrder);
             UpdateActiveOrders();
         }
@@ -155,15 +170,14 @@ namespace KoftaAndKonafa
         /// </summary>
         private void UpdateActiveOrders()
         {
-            Debug.Log(0);
             while (activeOrders.Count < maxActiveOrders && orderQueue.Any(o => !o.isActive))
             {
-                Debug.Log(1);
                 var nextOrder = orderQueue.FirstOrDefault(o => !o.isActive);
                 if (nextOrder != null)
                 {
-                    Debug.Log(2);
                     nextOrder.isActive = true;
+                    nextOrder.uiOrder.SetActive(true);
+                    nextOrder.uiOrder.transform.SetParent(uiActiveOrdersPanel);
                     activeOrders.Add(nextOrder);
                 }
             }
@@ -175,12 +189,14 @@ namespace KoftaAndKonafa
         public bool DeliverOrder(MealSO deliveredMeal)
         {
             var orderToDeliver = activeOrders
-                .Where(o => o.meal == deliveredMeal && o.isActive && !o.isDelivered)
+                .Where(o => o.meal.mealID == deliveredMeal.mealID && o.isActive && !o.isDelivered)
                 .OrderBy(o => o.remainingTime)
                 .FirstOrDefault();
 
             if (orderToDeliver != null)
             {
+                orderToDeliver.uiOrder.transform.DOScale(0, 1).SetEase(Ease.InBack)
+                    .OnComplete(() => Destroy(orderToDeliver.uiOrder));
                 orderToDeliver.isDelivered = true;
                 activeOrders.Remove(orderToDeliver);
                 orderQueue = new Queue<Order>(orderQueue.Where(o => !o.isDelivered));
@@ -203,13 +219,24 @@ namespace KoftaAndKonafa
             for (int i = activeOrders.Count - 1; i >= 0; i--)
             {
                 activeOrders[i].remainingTime -= Time.deltaTime;
+                activeOrders[i].uiOrderTimer.fillAmount = activeOrders[i].remainingTime / orderLifetime;
                 if (activeOrders[i].remainingTime <= 0)
                 {
                     Debug.LogWarning($"Order for {activeOrders[i].meal.name} expired.");
+                    Destroy(activeOrders[i].uiOrder);
                     activeOrders.RemoveAt(i);
                 }
             }
             UpdateActiveOrders();
+        }
+
+        private void LateUpdate()
+        {
+            if (!isGameRunning || isGamePaused) return;
+
+            for (int i = activeOrders.Count - 1; i >= 0; i--)
+                activeOrders[i].uiOrderTimer.fillAmount = activeOrders[i].remainingTime / orderLifetime;
+            
         }
 
         /// <summary>
@@ -231,6 +258,8 @@ namespace KoftaAndKonafa
         public bool isDelivered;
         public float remainingTime;
         public bool isActive;
+        public GameObject uiOrder;
+        public Image uiOrderTimer;
 
         public Order(MealSO meal, float orderLifetime)
         {

@@ -8,6 +8,11 @@ namespace KoftaAndKonafa.ScriptableObjects
     [CreateAssetMenu(fileName = "NewMeal", menuName = "KoftaAndKonafa/Meal", order = 2)]
     public class MealSO : ScriptableObject
     {
+        public int mealID;
+
+        public string mealName;
+
+        public int mealPrice;
         // Indicates if the meal needs cooking
         public bool needsCooking;
 
