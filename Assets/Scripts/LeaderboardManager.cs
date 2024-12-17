@@ -61,7 +61,11 @@ namespace KoftaAndKonafa
             player.score += scoreChange;
             player.scoreText.text = player.score + "$";
             if (player.playerName == "You")
+            {
                 mainPlayerScoreText.text = player.score + "$";
+                GameManager.Instance.playerScore = player.score;
+            }
+              
 
             RefreshLeaderboard();
         }
@@ -92,6 +96,7 @@ namespace KoftaAndKonafa
                 player.rankImage.sprite = rankSprites[player.rank - 1];
                 if (player.playerName == "You")
                 {
+                    GameManager.Instance.playerRankSprite.sprite = rankSprites[player.rank - 1];
                     mainPlayerRankSprite.sprite = rankSprites[player.rank - 1];
                     if (player.rank != currentMainPlayerRank)
                     {

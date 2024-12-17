@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Meal-4
   m_EditorClassIdentifier: 
   mealID: 4
-  mealName: 
+  mealName: Chicken Burger
   mealPrice: 10
   needsCooking: 0
   cookingTime: 0
@@ -29,4 +29,6 @@ MonoBehaviour:
     isDelivered: 0
   mealPrefabItem: {fileID: 2181002303047595581, guid: 19700dc9cb9791f47a6b114609a3f1ff,
     type: 3}
-  mealImage: {fileID: 21300034, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+  mealImage: {fileID: 21300000, guid: 19c5eece44b21e542988d90e915f1d1d, type: 3}
+  mealButtonImage: {fileID: 21300000, guid: d4c770ae873edd740aa4d55403c165cc, type: 3}
+  mealIcon: {fileID: 21300000, guid: 48564a85afd59d544bd17639386bdcae, type: 3}

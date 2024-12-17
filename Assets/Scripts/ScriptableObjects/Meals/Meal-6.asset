@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Meal-6
   m_EditorClassIdentifier: 
   mealID: 6
-  mealName: 
+  mealName: Moza Dany
   mealPrice: 19
   needsCooking: 1
   cookingTime: 6
@@ -23,4 +23,6 @@ MonoBehaviour:
     isDelivered: 0
   mealPrefabItem: {fileID: 9085667266210353771, guid: 05efc34dc9c48864fa4b55e522d645f0,
     type: 3}
-  mealImage: {fileID: 21300038, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+  mealImage: {fileID: 21300000, guid: 0f66c4507f55faf42be0a7b15de6d7b0, type: 3}
+  mealButtonImage: {fileID: 21300000, guid: 08a14bd828f5b8943b3058e5896dc630, type: 3}
+  mealIcon: {fileID: 21300000, guid: 9233454c813688f409c287562cf21fd5, type: 3}

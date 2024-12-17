@@ -11,8 +11,8 @@ public class MealButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = mealSO.name;
-        transform.GetChild(1).GetComponent<Image>().sprite = mealSO.mealImage;
+        //transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = mealSO.name;
+        transform.GetComponent<Image>().sprite = mealSO.mealButtonImage;
     }
 
     // Update is called once per frame

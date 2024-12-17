@@ -26,11 +26,13 @@ public class IngredientLoader : MonoBehaviour
 
     [SerializeField] private GameObject[] prefabList;
     [SerializeField] private IngredientSO[] ingredientSOsList;
+    [SerializeField] private Sprite[] ingredientSprites, prepSprites;
+    
     public Dictionary<int, GameObject> ingredientsPrefabs = new Dictionary<int, GameObject>();
     public Dictionary<int, GameObject> preparedIngredientsPrefabs = new Dictionary<int, GameObject>();
     public Dictionary<GameEnums.Ingredient, IngredientSO> IngredientSos = new Dictionary<GameEnums.Ingredient, IngredientSO>();
-    
-
+    public Dictionary<GameEnums.Ingredient, Sprite> IngredientsIcons = new Dictionary<GameEnums.Ingredient, Sprite>();
+    public Dictionary<GameEnums.IngredientState, Sprite> PrepIcons = new Dictionary<GameEnums.IngredientState, Sprite>();
 
     private void Start()
     {
@@ -62,6 +64,25 @@ public class IngredientLoader : MonoBehaviour
         IngredientSos.Add(GameEnums.Ingredient.Pancake,ingredientSOsList[11]);
         IngredientSos.Add(GameEnums.Ingredient.Syrup,ingredientSOsList[12]);
         
+        IngredientsIcons.Add(GameEnums.Ingredient.Potato,ingredientSprites[0]);
+        IngredientsIcons.Add(GameEnums.Ingredient.Tomato,ingredientSprites[1]);
+        IngredientsIcons.Add(GameEnums.Ingredient.Onion,ingredientSprites[2]);
+        IngredientsIcons.Add(GameEnums.Ingredient.Cucumber,ingredientSprites[3]);
+        IngredientsIcons.Add(GameEnums.Ingredient.Cheese,ingredientSprites[4]);
+        IngredientsIcons.Add(GameEnums.Ingredient.Egg,ingredientSprites[5]);
+        IngredientsIcons.Add(GameEnums.Ingredient.Bun,ingredientSprites[6]);
+        IngredientsIcons.Add(GameEnums.Ingredient.BurgerPatty,ingredientSprites[7]);
+        IngredientsIcons.Add(GameEnums.Ingredient.ChickenPatty,ingredientSprites[8]);
+        IngredientsIcons.Add(GameEnums.Ingredient.Chicken,ingredientSprites[9]);
+        IngredientsIcons.Add(GameEnums.Ingredient.Meat,ingredientSprites[10]);
+        IngredientsIcons.Add(GameEnums.Ingredient.Pancake,ingredientSprites[11]);
+        IngredientsIcons.Add(GameEnums.Ingredient.Syrup,ingredientSprites[12]);
+        
+        PrepIcons.Add(GameEnums.IngredientState.Chopped,prepSprites[0] );
+        PrepIcons.Add(GameEnums.IngredientState.Heated,prepSprites[1] );
+        
         
     }
+    
+    
 }

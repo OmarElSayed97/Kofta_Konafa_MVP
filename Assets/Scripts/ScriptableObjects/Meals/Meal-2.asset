@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Meal-2
   m_EditorClassIdentifier: 
   mealID: 2
-  mealName: 
+  mealName: Tajin Lahm
   mealPrice: 15
   needsCooking: 1
   cookingTime: 3
@@ -26,4 +26,6 @@ MonoBehaviour:
     isDelivered: 0
   mealPrefabItem: {fileID: 6463749299160324004, guid: 03072520b18e4ea4395776d6fb50545a,
     type: 3}
-  mealImage: {fileID: 21300030, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+  mealImage: {fileID: 21300000, guid: 678f09edaebdec74ba05dc62b57839ef, type: 3}
+  mealButtonImage: {fileID: 21300000, guid: 2e96339223439fd41aef777b4d36cb71, type: 3}
+  mealIcon: {fileID: 21300000, guid: ccd6c79237daba24f9459fc4d937c51e, type: 3}

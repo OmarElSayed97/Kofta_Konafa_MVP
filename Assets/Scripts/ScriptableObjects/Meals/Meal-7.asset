@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Meal-7
   m_EditorClassIdentifier: 
   mealID: 7
-  mealName: 
+  mealName: Salad
   mealPrice: 5
   needsCooking: 0
   cookingTime: 0
@@ -26,4 +26,6 @@ MonoBehaviour:
     isDelivered: 0
   mealPrefabItem: {fileID: 285454791685118853, guid: f6befa7519aa6d746b911bf567b66d1e,
     type: 3}
-  mealImage: {fileID: 21300040, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+  mealImage: {fileID: 21300000, guid: 31cd6f749628ac64d82ec5068a174c37, type: 3}
+  mealButtonImage: {fileID: 21300000, guid: 948530cc4611945419a592fd435e2e58, type: 3}
+  mealIcon: {fileID: 21300000, guid: 9821ccaf9a8c68a4da36fa6f932e6e37, type: 3}

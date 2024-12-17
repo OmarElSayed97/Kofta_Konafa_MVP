@@ -4,8 +4,10 @@ using UnityEngine;
 using System.Linq;
 using System.Collections;
 using DG.Tweening;
+using KoftaAndKonafa.Enums;
 using KoftaAndKonafa.ScriptableObjects;
 using TMPro;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -25,12 +27,14 @@ namespace KoftaAndKonafa
         [Header("UI")] 
         public Transform uiActiveOrdersPanel;
         public Transform uiInactiveOrderQueue;
-        public GameObject uiOrderPrefab;
+        public GameObject uiOrderPrefab,menuPanel,draftPanel,hudPanel,gameoverPanel;
 
         [Header("References")] 
         [SerializeField] private LeaderboardManager _leaderboardManager;
         [SerializeField] private GameObject botSimulatorObject;
         [SerializeField] private TextMeshProUGUI remainingTimeText;
+        [SerializeField] public Image playerRankSprite;
+        [HideInInspector] public int playerScore;
         
         Queue<Order> orderQueue = new Queue<Order>();
         List<Order> activeOrders = new List<Order>();
@@ -145,6 +149,7 @@ namespace KoftaAndKonafa
         private void EndGame()
         {
             isGameRunning = false;
+            GameOver();
             Debug.Log("Game Over!");
         }
         
@@ -182,8 +187,30 @@ namespace KoftaAndKonafa
             
             var newOrder = new Order(GetRandomMealSO(), orderLifetime);
             newOrder.uiOrder = Instantiate(uiOrderPrefab, uiInactiveOrderQueue);
-            newOrder.uiOrder.transform.GetChild(0).GetComponent<Image>().sprite = newOrder.meal.mealImage;
-            newOrder.uiOrderTimer = newOrder.uiOrder.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+            UIOrderComponent uiOrderComponent = newOrder.uiOrder.GetComponent<UIOrderComponent>();
+            newOrder.uiOrderTimer = uiOrderComponent.orderTimer;
+            for (int i = 0; i < 4; i++)
+            {
+                if (i <= newOrder.meal.requiredIngredients.Count - 1)
+                {
+                    uiOrderComponent.orderIngredients[i].sprite = IngredientLoader.Instance.IngredientsIcons[newOrder.meal.requiredIngredients[i].ingredient.ingredientName];
+                    if (newOrder.meal.requiredIngredients[i].finalState == GameEnums.IngredientState.Default)
+                        uiOrderComponent.orderIngredientsStates[i].color = Color.clear;
+                    else
+                        uiOrderComponent.orderIngredientsStates[i].sprite =
+                            IngredientLoader.Instance.PrepIcons[newOrder.meal.requiredIngredients[i].finalState];
+                }
+                else
+                {
+                   Destroy(uiOrderComponent.orderIngredients[i].transform.parent.gameObject);
+                   Destroy(uiOrderComponent.orderIngredientsStates[i].transform.parent.gameObject);
+                }
+                    
+            }
+
+            uiOrderComponent.orderImage.sprite = newOrder.meal.mealImage;
+            if (newOrder.meal.needsCooking)
+                uiOrderComponent.orderIsCooking.SetActive(true);
             newOrder.uiOrder.SetActive(false);
             orderQueue.Enqueue(newOrder);
             UpdateActiveOrders();
@@ -270,6 +297,25 @@ namespace KoftaAndKonafa
         private MealSO GetRandomMealSO()
         {
             return KitchenManager.Instance.playerOneMealData[Random.Range(0, KitchenManager.Instance.playerOneMealData.Count)].mealSO;
+        }
+
+        public void PlayNow()
+        {
+            draftPanel.SetActive(true);
+            menuPanel.SetActive(false);
+        }
+
+        public void GameOver()
+        {
+            hudPanel.SetActive(false);
+            gameoverPanel.SetActive(true);
+            gameoverPanel.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "& you earned " + playerScore + "$";
+        }
+
+        public void Restart()
+        {
+            ResetGame();
+            SceneManager.LoadScene(0);
         }
     }
 

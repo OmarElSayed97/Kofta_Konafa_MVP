@@ -36,9 +36,11 @@ namespace KoftaAndKonafa.ScriptableObjects
 
         public GameObject mealPrefabItem;
         public Sprite mealImage;
+        public Sprite mealButtonImage;
+        public Sprite mealIcon;
 
 
-      
+
         /// <summary>
         /// Resets the 'isDelivered' property of all required ingredients to false.
         /// </summary>

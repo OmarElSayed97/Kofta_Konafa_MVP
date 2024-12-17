@@ -15,13 +15,15 @@ namespace KoftaAndKonafa
         public List<Image> player2MealImages;
         public List<Image> player3MealImages;
         public List<Image> player4MealImages;
-        public TMP_Text currentTurnText;
+        public TMP_Text currentTurnText, mealSelectionText;
         public Button continueButton;
+
+        public Transform mealGridTransform;
 
         [Header("Draft Settings")]
         public float botDecisionTime = 2f;
 
-        public GameObject draftPanel;
+        public GameObject draftPanel,hudPanel;
 
         private List<MealSO> player1Meals = new List<MealSO>();
         private List<MealSO> player2Meals = new List<MealSO>();
@@ -34,6 +36,7 @@ namespace KoftaAndKonafa
 
         private void Start()
         {
+            ShuffleMenu(mealGridTransform);
             InitializeDraft();
         }
 
@@ -73,6 +76,7 @@ namespace KoftaAndKonafa
             // Bot turns
             for (int i = 1; i <= 2; i++)
             {
+                UpdateTurnText("Bot_" + i + " is currently choosing");
                 yield return new WaitForSeconds(botDecisionTime);
                 MealSO selectedMeal = GetRandomAvailableMeal();
                 AddMealToPlayer(i, selectedMeal);
@@ -125,11 +129,11 @@ namespace KoftaAndKonafa
 
             if (mealImage is not null)
             {
-                mealImage.sprite = meal.mealImage;
+                mealImage.sprite = meal.mealIcon;
                 mealImage.gameObject.SetActive(true);
             }
 
-            UpdateTurnText($"Player {playerIndex + 1} selected {meal.name}.");
+          
         }
 
         /// <summary>
@@ -196,12 +200,41 @@ namespace KoftaAndKonafa
                 botList.Add(bot);
 
             }
+            hudPanel.SetActive(true);
             KitchenManager.Instance.BuildKitchen();
             GameManager.Instance.InitializeBots(botList);
             GameManager.Instance.StartGame();
             Debug.Log("Game Started!");
             draftPanel.SetActive(false);
            
+        }
+        
+        
+        public static void ShuffleMenu(Transform parent)
+        {
+            if (parent.childCount <= 1) return;
+
+            // Store the children in a list
+            List<Transform> children = new List<Transform>();
+
+            for (int i = 0; i < parent.childCount; i++)
+            {
+                children.Add(parent.GetChild(i));
+            }
+
+            // Shuffle the list using Fisher-Yates shuffle
+            for (int i = children.Count - 1; i > 0; i--)
+            {
+                int randomIndex = Random.Range(0, i + 1);
+                //Swap
+                (children[i], children[randomIndex]) = (children[randomIndex], children[i]);
+            }
+
+            // Reassign children in shuffled order
+            foreach (Transform child in children)
+            {
+                child.SetSiblingIndex(children.IndexOf(child));
+            }
         }
     }
 }

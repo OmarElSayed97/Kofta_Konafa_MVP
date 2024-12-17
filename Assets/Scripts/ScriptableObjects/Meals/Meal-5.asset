@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Meal-5
   m_EditorClassIdentifier: 
   mealID: 5
-  mealName: 
+  mealName: Bed Bel Gebna
   mealPrice: 7
   needsCooking: 0
   cookingTime: 0
@@ -26,4 +26,6 @@ MonoBehaviour:
     isDelivered: 0
   mealPrefabItem: {fileID: 959938008474644741, guid: 86af3beec67bdfa4da6b9dfba2edf8e9,
     type: 3}
-  mealImage: {fileID: 21300036, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+  mealImage: {fileID: 21300000, guid: e574b370b7b666a459842b960f12c890, type: 3}
+  mealButtonImage: {fileID: 21300000, guid: 1ca4a93eeca3fe94f9f1114039a98450, type: 3}
+  mealIcon: {fileID: 21300000, guid: c0a280b523c359c4184ea997d505b2dc, type: 3}

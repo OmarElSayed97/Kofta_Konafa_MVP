@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Meal-8
   m_EditorClassIdentifier: 
   mealID: 8
-  mealName: 
+  mealName: Pancake
   mealPrice: 6
   needsCooking: 0
   cookingTime: 0
@@ -26,4 +26,6 @@ MonoBehaviour:
     isDelivered: 0
   mealPrefabItem: {fileID: 5159219198781091124, guid: a0c74e9fa55d7814689a6147b293f7c9,
     type: 3}
-  mealImage: {fileID: 21300042, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+  mealImage: {fileID: 21300000, guid: c77b3938b35b1324f86512ce0a574303, type: 3}
+  mealButtonImage: {fileID: 21300000, guid: 9a8ebd0cf149b7d479d7824115bf7693, type: 3}
+  mealIcon: {fileID: 21300000, guid: 20d650a580b9eb944a856dc136c3960c, type: 3}

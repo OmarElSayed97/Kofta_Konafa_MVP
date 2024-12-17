@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Meal-3
   m_EditorClassIdentifier: 
   mealID: 3
-  mealName: 
+  mealName: Cheese Burger
   mealPrice: 12
   needsCooking: 0
   cookingTime: 0
@@ -29,4 +29,6 @@ MonoBehaviour:
     isDelivered: 0
   mealPrefabItem: {fileID: 7071618355900798724, guid: 326b75d9097c4e94586686e2be2992dd,
     type: 3}
-  mealImage: {fileID: 21300032, guid: 7ab74e659e1f0a34d9cfec21c478fc12, type: 3}
+  mealImage: {fileID: 21300000, guid: 2d381bbc57e1aa941a92bd644d903a81, type: 3}
+  mealButtonImage: {fileID: 21300000, guid: 7b3fd1664b4066548b0b9cd3a3f3429a, type: 3}
+  mealIcon: {fileID: 21300000, guid: b4cb7be5658f58947921135456786073, type: 3}
